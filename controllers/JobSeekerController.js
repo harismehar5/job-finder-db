@@ -89,7 +89,7 @@ exports.updateById = async (req, res) => {
 
 exports.updateStatus = async (req, res) => {
   try {
-    const response = await Job.updateOne(
+    const response = await JobSeeker.updateOne(
       { _id: req.params.id },
       {
         $set: {
