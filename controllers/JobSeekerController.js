@@ -26,7 +26,9 @@ exports.addJobSeeker = async (req, res) => {
 
 exports.getJobSeekers = async (req, res) => {
   try {
+    console.log("Job Seeker")
     const jobSeekers = await JobSeeker.find();
+    console.log("Job Seeker", jobSeekers)
     if (jobSeekers.length !== 0) {
       res.status(200).json({ error: false, job_seekers: jobSeekers });
     } else {
