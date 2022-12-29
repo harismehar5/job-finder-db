@@ -21,7 +21,7 @@ exports.addJob = async (req, res) => {
   }
   const job = new Job({
     job_title: req.body.job_title,
-    joib_description: req.body.job_description,
+    job_description: req.body.job_description,
     amount: req.body.amount,
     job_type: req.body.job_type,
     tags: tags_list,
@@ -101,7 +101,7 @@ exports.updateById = async (req, res) => {
       {
         $set: {
           job_title: req.body.job_title,
-          joib_description: req.body.job_description,
+          job_description: req.body.job_description,
           amount: req.body.amount,
           job_type: req.body.job_type,
           tags: tags_list,
