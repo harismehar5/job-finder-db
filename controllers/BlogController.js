@@ -1,5 +1,5 @@
 const Blog = require("../models/Blog");
-const cloudinary = require("../middleware/cloudinary");
+const cloudinary = require("../middleware/clodinary");
 
 exports.addBlog = async (req, res) => {
   const data = JSON.parse(req.body.data);
