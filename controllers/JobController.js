@@ -15,7 +15,6 @@ exports.addJob = async (req, res) => {
     for (let i = 0; i < req.body.tags.length; i++) {
       tags_list.push({
         _id: req.body.tags[i]._id,
-        name: req.body.tags[i].name,
       });
     }
   }
@@ -92,7 +91,6 @@ exports.updateById = async (req, res) => {
       for (let i = 0; i < req.body.tags.length; i++) {
         tags_list.push({
           _id: req.body.tags[i]._id,
-          name: req.body.tags[i].name,
         });
       }
     }
