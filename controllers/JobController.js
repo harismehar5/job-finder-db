@@ -15,7 +15,7 @@ exports.addJob = async (req, res) => {
     for (let i = 0; i < req.body.tags.length; i++) {
       tags_list.push({
         _id: req.body.tags[i]._id,
-        name: req.body.tags[i].name
+        name: req.body.tags[i].name,
       });
     }
   }
@@ -78,6 +78,7 @@ exports.getById = async (req, res) => {
 
 exports.updateById = async (req, res) => {
   try {
+    var tags_list = [];
     if (
       req.body.tags === null ||
       req.body.tags === undefined ||
@@ -88,11 +89,10 @@ exports.updateById = async (req, res) => {
         error_msg: "Something went wrong...!",
       });
     } else {
-      const tags_list = [];
       for (let i = 0; i < req.body.tags.length; i++) {
         tags_list.push({
           _id: req.body.tags[i]._id,
-          name: req.body.tags[i].name
+          name: req.body.tags[i].name,
         });
       }
     }
