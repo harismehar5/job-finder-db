@@ -1,30 +1,15 @@
 const Blog = require("../models/Blog");
+const cloudinary = require("../middleware/cloudinary");
 
 exports.addBlog = async (req, res) => {
-  if (
-    req.body.tags === null ||
-    req.body.tags === undefined ||
-    req.body.tags.length <= 0
-  ) {
-    res.status(500).json({
-      error: true,
-      error_msg: "Something went wrong...!",
-    });
-  } else {
-    const tags_list = [];
-    for (let i = 0; i < req.body.tags.length; i++) {
-      tags_list.push({
-        _id: req.body.tags[i]._id,
-        name: req.body.tags[i].name,
-      });
-    }
-  }
+  const data = JSON.parse(req.body.data);
+  const result = await cloudinary.uploader.upload(req.file.path);
+
   const blog = new Blog({
-    feature_image: req.body.job_seeker_id,
-    title: req.body.job_poster_id,
-    description: req.body.job_id,
-    tags: req.body.tags_list,
-    is_active: req.body.job_seeker_Blog,
+    title: data.title,
+    description: data.description,
+    tags: data.tags,
+    feature_image: result.url,
   });
   try {
     const response = await blog.save();
@@ -77,33 +62,16 @@ exports.getById = async (req, res) => {
 
 exports.updateById = async (req, res) => {
   try {
-    if (
-      req.body.tags === null ||
-      req.body.tags === undefined ||
-      req.body.tags.length <= 0
-    ) {
-      res.status(500).json({
-        error: true,
-        error_msg: "Something went wrong...!",
-      });
-    } else {
-      const tags_list = [];
-      for (let i = 0; i < req.body.tags.length; i++) {
-        tags_list.push({
-          _id: req.body.tags[i]._id,
-          name: req.body.tags[i].name,
-        });
-      }
-    }
+    const data = JSON.parse(req.body.data);
+    const result = await cloudinary.uploader.upload(req.file.path);
     const response = await Blog.updateOne(
       { _id: req.params.id },
       {
         $set: {
-          feature_image: req.body.job_seeker_id,
-          title: req.body.job_poster_id,
-          description: req.body.job_id,
-          tags: req.body.tags_list,
-          is_active: req.body.job_seeker_Blog,
+          title: data.title,
+          description: data.description,
+          tags: data.tags,
+          feature_image: result.url,
         },
       }
     );

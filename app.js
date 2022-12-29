@@ -1,9 +1,9 @@
 const express = require("express");
 const mongoose = require("mongoose");
+const multer = require("multer");
 require("dotenv").config();
 var cors = require("cors");
-
-const URL = "mongodb://localhost/summer_asia";
+const path = require("path");
 
 const jobRouter = require("./routes/JobRoutes");
 const jobSeekerRouter = require("./routes/JobSeekerRoutes");
@@ -16,6 +16,8 @@ const app = express();
 const PORT = process.env.PORT || 4000;
 
 app.use(cors());
+app.use(express.json());
+
 console.log("Database url", process.env.DATABASE_URL);
 mongoose.connect(process.env.DATABASE_URL, { useNewUrlParser: true });
 
@@ -24,7 +26,14 @@ conn.on("open", function () {
   console.log("connected...");
 });
 
-app.use(express.json());
+const storage = multer.diskStorage({
+  filename: (req, file, cb) => {
+    cb(null, new Date().getTime() + path.extname(file.originalname));
+  },
+});
+
+app.use(multer({ storage }).single("image"));
+
 app.use("/job", jobRouter);
 app.use("/job_poster", jobPosterRouter);
 app.use("/job_seeker", jobSeekerRouter);
